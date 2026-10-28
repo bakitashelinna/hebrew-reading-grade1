@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>קוֹרְאִים וּמַתְאִימִים - מִשְׂחָק תִּרְגּוּל קְרִיאָה לְכִתָּה א'</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@500;700;800&family=Rubik:wght@500;700;900&family=Varela+Round&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #F3F8F5 0%, #EBF4F0 50%, #F5F9F7 100%);
+      --card-bg: #FFFFFF;
+      --primary: #3B8266;
+      --primary-light: #E8F5EE;
+      --primary-hover: #2D6A52;
+      --accent-gold: #F59E0B;
+      --accent-gold-light: #FEF3C7;
+      --accent-coral: #F87171;
+      --accent-sky: #E0F2FE;
+      --text-main: #1F3830;
+      --text-muted: #5E7A71;
+      --border-color: #E2ECE7;
+      --shadow-sm: 0 4px 12px rgba(45, 106, 82, 0.06);
+      --shadow-md: 0 10px 25px rgba(45, 106, 82, 0.08);
+      --shadow-lg: 0 18px 40px rgba(45, 106, 82, 0.12);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-full: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Varela Round', 'Assistant', 'Rubik', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Container */
+    .app-container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      background: #FFF9F3;
+      border: 2px solid #F5DCC8;
+      border-radius: 16px;
+      padding: 4px 10px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      text-decoration: none;
+      overflow: hidden;
+    }
+
+    .logo-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(235, 130, 60, 0.2);
+      border-color: #E28854;
+    }
+
+    .app-logo {
+      height: 52px;
+      width: auto;
+      max-width: 170px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .brand-text h1 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .stats-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .site-link-pill {
+      background: #FFF7ED;
+      color: #9A3412;
+      border: 2px solid #FDBA74;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .site-link-pill:hover {
+      background: #FFEDD5;
+      border-color: #EA580C;
+      color: #7C2D12;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2);
+    }
+
+    .stat-pill {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .stat-pill.bounce {
+      transform: scale(1.22);
+      border-color: var(--accent-gold);
+      background: var(--accent-gold-light);
+    }
+
+    .stat-pill.stars-pill {
+      color: #B45309;
+      background: #FEF3C7;
+      border-color: #FDE68A;
+    }
+
+    .stat-pill.streak-pill {
+      color: #C2410C;
+      background: #FFEDD5;
+      border-color: #FED7AA;
+    }
+
+    .icon-btn {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Progress bar */
+    .progress-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 8px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #6EE7B7, #10B981);
+      width: 0%;
+      border-radius: var(--radius-full);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .progress-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      min-width: 60px;
+      text-align: left;
+    }
+
+    /* Main Play Area */
+    .main-board {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    /* Instruction banner */
+    .instruction-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: var(--radius-full);
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(59, 130, 102, 0.2);
+    }
+
+    /* Target Word Card */
+    .word-card-container {
+      width: 100%;
+      max-width: 580px;
+      background: #FFFFFF;
+      border: 3px solid #D6E8DF;
+      border-radius: 28px;
+      padding: 22px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .target-word {
+      font-family: 'Rubik', 'Assistant', sans-serif;
+      font-size: 4.6rem;
+      font-weight: 900;
+      color: #17382B;
+      letter-spacing: 2px;
+      line-height: 1.25;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 12px;
+      direction: rtl;
+    }
+
+    /* Syllables View */
+    .syllables-box {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding: 8px 16px;
+      background: #F0FDF4;
+      border-radius: var(--radius-full);
+      border: 1.5px dashed #86EFAC;
+    }
+
+    .syllable-item {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .syllable-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      margin-top: 4px;
+    }
+
+    .syllables-separator {
+      font-size: 1.8rem;
+      color: #94A3B8;
+      font-weight: 700;
+    }
+
+    /* Word action buttons */
+    .word-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 2px solid transparent;
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .action-btn:hover {
+      background: #D8EFE3;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .action-btn.active {
+      background: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .action-btn.btn-shout {
+      background: #FFFBEB;
+      color: #B45309;
+      border-color: #FDE68A;
+    }
+
+    .action-btn.btn-shout:hover {
+      background: #FEF3C7;
+      border-color: #F59E0B;
+    }
+
+    /* Pictures Grid (3 choices) */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      width: 100%;
+    }
+
+    .choice-card {
+      background: #FFFFFF;
+      border: 3px solid var(--border-color);
+      border-radius: 26px;
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+    }
+
+    .choice-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: #A7D5C1;
+    }
+
+    .choice-card:active {
+      transform: translateY(-2px) scale(0.98);
+    }
+
+    .card-svg-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
+    }
+
+    .card-svg {
+      width: 82%;
+      height: 82%;
+      max-width: 150px;
+      max-height: 150px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.06));
+    }
+
+    /* Card Success State */
+    .choice-card.correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+      box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.2), var(--shadow-lg) !important;
+      transform: scale(1.04) !important;
+      pointer-events: none;
+    }
+
+    .choice-card.correct .card-svg-container {
+      transform: scale(1.12);
+    }
+
+    .choice-badge-success {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #10B981;
+      color: #FFFFFF;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+      animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Card Wrong State (Gentle encouragement) */
+    .choice-card.wrong {
+      border-color: #FCD34D !important;
+      background: #FFFBEB !important;
+      opacity: 0.65;
+      cursor: default;
+      animation: gentleWobble 0.5s ease-in-out;
+      pointer-events: none;
+    }
+
+    .choice-card.wrong .card-svg-container {
+      filter: grayscale(0.2);
+    }
+
+    .choice-badge-retry {
+      position: absolute;
+      bottom: 8px;
+      background: #F59E0B;
+      color: #FFFFFF;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+      animation: popIn 0.3s ease;
+    }
+
+    /* Feedback Banner at Bottom */
+    .feedback-banner {
+      min-height: 52px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6px 12px;
+      transition: all 0.3s ease;
+    }
+
+    .feedback-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 24px;
+      border-radius: var(--radius-full);
+      font-size: 1.25rem;
+      font-weight: 800;
+      animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .feedback-content.success {
+      background: #D1FAE5;
+      color: #065F46;
+      border: 2px solid #6EE7B7;
+    }
+
+    .feedback-content.encourage {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 2px solid #FCD34D;
+    }
+
+    .btn-next {
+      background: #10B981;
+      color: white;
+      border: none;
+      padding: 7px 18px;
+      border-radius: var(--radius-full);
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      font-family: inherit;
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-next:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+
+    /* Floating Score Animation Stars */
+    .flying-star {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      pointer-events: none;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      filter: drop-shadow(0 4px 8px rgba(245, 158, 11, 0.5));
+      transition: transform 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.75s ease;
+    }
+
+    .score-float-tag {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #F59E0B;
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      pointer-events: none;
+      animation: floatUpFade 1s forwards ease-out;
+      box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+    }
+
+    /* Modal (Round summary) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(23, 56, 43, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 16px;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #FFFFFF;
+      border-radius: 32px;
+      padding: 36px 28px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      border: 3px solid #D6E8DF;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-overlay.open .modal-card {
+      transform: scale(1);
+    }
+
+    .trophy-badge {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 16px;
+      background: #FEF3C7;
+      border: 3px solid #FDE68A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      box-shadow: 0 10px 20px rgba(245, 158, 11, 0.2);
+      animation: bounceGentle 1.8s infinite ease-in-out;
+    }
+
+    .modal-card h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+
+    .modal-card p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-stats {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .modal-stat-box {
+      background: var(--primary-light);
+      border-radius: 18px;
+      padding: 14px 20px;
+      flex: 1;
+    }
+
+    .modal-stat-box .val {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+
+    .modal-stat-box .lbl {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .btn-restart {
+      background: #10B981;
+      color: #FFFFFF;
+      border: none;
+      padding: 14px 36px;
+      border-radius: var(--radius-full);
+      font-size: 1.25rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .btn-restart:hover {
+      background: #059669;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(16, 185, 129, 0.45);
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 998;
+    }
+
+    /* Keyframe Animations */
+    @keyframes gentleWobble {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      20% { transform: translateX(-6px) rotate(-2deg); }
+      40% { transform: translateX(6px) rotate(2deg); }
+      60% { transform: translateX(-4px) rotate(-1deg); }
+      80% { transform: translateX(4px) rotate(1deg); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounceGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes floatUpFade {
+      0% { opacity: 1; transform: translate(-50%, 0); }
+      100% { opacity: 0; transform: translate(-50%, -35px); }
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .footer-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+      flex-wrap: wrap;
+    }
+
+    .footer-logo-link {
+      display: flex;
+      align-items: center;
+      background: #FFF9F3;
+      border: 1.5px solid #F5DCC8;
+      border-radius: 12px;
+      padding: 4px 8px;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .footer-logo-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(235, 130, 60, 0.2);
+      border-color: #E28854;
+    }
+
+    .footer-logo-img {
+      height: 44px;
+      width: auto;
+      max-width: 150px;
+      object-fit: contain;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .footer-text {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-title {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .footer-web-btn {
+      background: linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 100%);
+      color: #9A3412;
+      border: 1.5px solid #FDBA74;
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.08);
+    }
+
+    .footer-web-btn:hover {
+      background: #FED7AA;
+      border-color: #EA580C;
+      color: #7C2D12;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2);
+    }
+
+    /* Finish Modal Promo */
+    .modal-footer-promo {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 2px dashed #E2ECE7;
+    }
+
+    .modal-promo-link {
+      background: #FFF7ED;
+      border: 2px solid #FED7AA;
+      border-radius: 20px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-decoration: none;
+      color: #9A3412;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .modal-promo-link:hover {
+      background: #FFEDD5;
+      border-color: #F97316;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(249, 115, 22, 0.2);
+    }
+
+    .modal-promo-logo {
+      height: 44px;
+      width: auto;
+      max-width: 140px;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    .promo-info {
+      text-align: right;
+    }
+
+    .promo-title {
+      font-size: 0.85rem;
+      color: #7C2D12;
+      font-weight: 700;
+    }
+
+    .promo-sub {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #C2410C;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .app-container {
+        gap: 12px;
+      }
+      header {
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .brand {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: space-between;
+      }
+      .stats-group {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .app-logo {
+        height: 44px;
+        max-width: 130px;
+      }
+      .footer-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+      .footer-text {
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .brand-text h1 {
+        font-size: 1.15rem;
+      }
+      .brand-text p {
+        display: none;
+      }
+      .target-word {
+        font-size: 3.4rem;
+      }
+      .choice-card {
+        padding: 12px 8px;
+        border-radius: 20px;
+      }
+      .main-board {
+        padding: 16px;
+        gap: 14px;
+      }
+      .instruction-badge {
+        font-size: 0.98rem;
+        padding: 6px 14px;
+      }
+      .feedback-content {
+        font-size: 1.05rem;
+        padding: 8px 16px;
+      }
+      .site-link-pill {
+        padding: 6px 10px;
+        font-size: 0.82rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <a href="https://www.bakitashelinna.co.il/" target="_blank" rel="noopener noreferrer" class="logo-link" title="מעבר לאתר בכיתה של אינה">
+          <img src="logo.png" alt="הוראה בהנעה - משולחנה של המורה זינובי אינה" class="app-logo">
+        </a>
+        <div class="brand-text">
+          <h1>קוֹרְאִים וּמַתְאִימִים</h1>
+          <p>תִּרְגּוּל קְרִיאָה בְּקוֹל רָם לְכִתָּה א'</p>
+        </div>
+      </div>
+
+      <div class="stats-group">
+        <a href="https://www.bakitashelinna.co.il/" target="_blank" rel="noopener noreferrer" class="site-link-pill" title="מעבר לאתר בכיתה של אינה">
+          <span>🌐</span>
+          <span>בַּכִּתָּה שֶׁל אִינָה</span>
+          <span>↗</span>
+        </a>
+        <div class="stat-pill stars-pill" id="score-pill" title="צבירת נקודות">
+          <span>⭐</span>
+          <span id="score-val">0</span>
+        </div>
+        <div class="stat-pill streak-pill" id="streak-pill" title="רצף הצלחות">
+          <span>🔥</span>
+          <span id="streak-val">0</span>
+        </div>
+        <button class="icon-btn" id="sound-toggle-btn" title="הפעל/השתק צלילים">🔊</button>
+      </div>
+    </header>
+
+    <!-- Progress track -->
+    <div class="progress-wrapper">
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-bar"></div>
+      </div>
+      <div class="progress-label" id="progress-text">1 / 10</div>
+    </div>
+
+    <!-- Main Game Board -->
+    <main class="main-board">
+      
+      <!-- Instructions -->
+      <div class="instruction-badge">
+        <span>🗣️</span>
+        <span>קִרְאוּ אֶת הַמִּלָּה בְּקוֹל רָם, וּבַחֲרוּ אֶת הַצִּיּוּר:</span>
+      </div>
+
+      <!-- Target Vocalized Word -->
+      <div class="word-card-container" id="word-container">
+        <div class="target-word" id="word-display">כֶּלֶב</div>
+        
+        <!-- Syllables Breakdown (Toggleable) -->
+        <div class="syllables-box" id="syllables-display">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Action Helper Buttons -->
+        <div class="word-actions">
+          <button class="action-btn" id="listen-word-btn" title="השמעת המילה">
+            <span>🔊</span>
+            <span>הַשְׁמָעָה</span>
+          </button>
+          <button class="action-btn" id="syllables-toggle-btn" title="פירוק המילה לתנועות">
+            <span>🧩</span>
+            <span>פֵּרוּק לִתְנוּעוֹת</span>
+          </button>
+          <button class="action-btn btn-shout" id="read-aloud-btn" title="קראתי בקול!">
+            <span>🎤</span>
+            <span>קָרָאתִי בְּקוֹל!</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3 Picture Choices -->
+      <div class="choices-grid" id="choices-grid">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Feedback Area -->
+      <div class="feedback-banner" id="feedback-banner">
+        <!-- Messages appear here -->
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-card">
+        <a href="https://www.bakitashelinna.co.il/" target="_blank" rel="noopener noreferrer" class="footer-logo-link" title="מעבר לאתר בכיתה של אינה">
+          <img src="logo.png" alt="הוראה בהנעה - בכיתה של אינה" class="footer-logo-img">
+        </a>
+        <div class="footer-text">
+          <p class="footer-title">
+            מִשְׂחָק מְעוֹדֵד קְרִיאָה מְדֻיֶּקֶת עִם נִקּוּד • מַתְאִים לְכִתּוֹת א' וּלְרֵאשִׁית קְרִיאָה
+          </p>
+          <a href="https://www.bakitashelinna.co.il/" target="_blank" rel="noopener noreferrer" class="footer-web-btn" title="מעבר לאתר בכיתה של אינה">
+            <span>🌐</span>
+            <span>לְמִשְׂחָקִים וְחָמְרֵי לִמּוּד: <strong>בַּכִּתָּה שֶׁל אִינָה</strong></span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Round Complete Celebration Modal -->
+  <div class="modal-overlay" id="finish-modal">
+    <div class="modal-card">
+      <div class="trophy-badge">🏆</div>
+      <h2>כָּל הַכָּבוֹד, אַלּוּפִים!</h2>
+      <p>סִיַּמְתֶּם אֶת הַסִּבּוּב בְּהַצְלָחָה רַבָּה וּקְרָאתֶם נִפְלָא בְּקוֹל רָם!</p>
+      
+      <div class="modal-stats">
+        <div class="modal-stat-box">
+          <div class="val" id="modal-final-score">100</div>
+          <div class="lbl">נְקֻדּוֹת שֶׁנִּצְבְּרוּ</div>
+        </div>
+        <div class="modal-stat-box">
+          <div class="val" id="modal-final-streak">10</div>
+          <div class="lbl">שִׂיא הָרֶצֶף</div>
+        </div>
+      </div>
+
+      <button class="btn-restart" id="modal-restart-btn">
+        <span>סִבּוּב חָדָשׁ 🔄</span>
+      </button>
+
+      <!-- Site Promotion Link in Finish Modal -->
+      <div class="modal-footer-promo">
+        <a href="https://www.bakitashelinna.co.il/" target="_blank" rel="noopener noreferrer" class="modal-promo-link" title="מעבר לאתר בכיתה של אינה">
+          <img src="logo.png" alt="בכיתה של אינה" class="modal-promo-logo">
+          <div class="promo-info">
+            <div class="promo-title">רוֹצִים עוֹד מִשְׂחָקִים וּפְעִילֻיּוֹת?</div>
+            <div class="promo-sub">הִכָּנְסוּ לָאֲתָר: <strong>בַּכִּתָּה שֶׁל אִינָה</strong> ↗</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==============================================================
+       1. DICTIONARY OF WORDS & HIGH QUALITY SVG ILLUSTRATIONS
+       ============================================================== */
+    const WORD_DATABASE = [
+      {
+        id: "kelev",
+        word: "כֶּלֶב",
+        syllables: ["כֶּ", "לֶב"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <radialGradient id="dogFace" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#FCEFD7"/>
+              <stop offset="100%" stop-color="#E5BE94"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="40" cy="55" rx="18" ry="32" transform="rotate(-20 40 55)" fill="#B57C48"/>
+          <ellipse cx="120" cy="55" rx="18" ry="32" transform="rotate(20 120 55)" fill="#B57C48"/>
+          <circle cx="80" cy="85" r="46" fill="url(#dogFace)"/>
+          <ellipse cx="80" cy="98" rx="22" ry="16" fill="#FFF9F0"/>
+          <ellipse cx="80" cy="90" rx="9" ry="6.5" fill="#3E2723"/>
+          <circle cx="77" cy="88" r="2.5" fill="#FFFFFF"/>
+          <path d="M80 96.5 v6 c-4 0 -7 4 -7 7" stroke="#3E2723" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M80 96.5 v6 c4 0 7 4 7 7" stroke="#3E2723" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M76 104 Q80 115 84 104 Z" fill="#FF8A80"/>
+          <circle cx="63" cy="74" r="6" fill="#3E2723"/>
+          <circle cx="61" cy="72" r="2.2" fill="#FFFFFF"/>
+          <circle cx="97" cy="74" r="6" fill="#3E2723"/>
+          <circle cx="95" cy="72" r="2.2" fill="#FFFFFF"/>
+          <path d="M57 65 Q63 62 69 65" stroke="#8D6E63" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M91 65 Q97 62 103 65" stroke="#8D6E63" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="53" cy="86" r="6" fill="#FFAB91" opacity="0.45"/>
+          <circle cx="107" cy="86" r="6" fill="#FFAB91" opacity="0.45"/>
+        </svg>`
+      },
+      {
+        id: "chatul",
+        word: "חָתוּל",
+        syllables: ["חָ", "תוּל"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <radialGradient id="catFace" cx="50%" cy="40%" r="50%">
+              <stop offset="0%" stop-color="#FFE0B2"/>
+              <stop offset="100%" stop-color="#FFA726"/>
+            </radialGradient>
+          </defs>
+          <polygon points="40,70 30,25 68,45" fill="#FB8C00"/>
+          <polygon points="43,62 36,33 63,48" fill="#FFAB91"/>
+          <polygon points="120,70 130,25 92,45" fill="#FB8C00"/>
+          <polygon points="117,62 124,33 97,48" fill="#FFAB91"/>
+          <circle cx="80" cy="88" r="45" fill="url(#catFace)"/>
+          <ellipse cx="62" cy="82" rx="7" ry="9" fill="#2E7D32"/>
+          <ellipse cx="62" cy="82" rx="3" ry="8" fill="#1B5E20"/>
+          <circle cx="60" cy="79" r="2.5" fill="#FFFFFF"/>
+          <ellipse cx="98" cy="82" rx="7" ry="9" fill="#2E7D32"/>
+          <ellipse cx="98" cy="82" rx="3" ry="8" fill="#1B5E20"/>
+          <circle cx="96" cy="79" r="2.5" fill="#FFFFFF"/>
+          <polygon points="76,95 84,95 80,100" fill="#E91E63"/>
+          <path d="M80 100 Q74 107 68 102" stroke="#4E342E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M80 100 Q86 107 92 102" stroke="#4E342E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M52 94 L30 90 M52 99 L28 101 M52 104 L32 110" stroke="#6D4C41" stroke-width="2" stroke-linecap="round"/>
+          <path d="M108 94 L130 90 M108 99 L132 101 M108 104 L128 110" stroke="#6D4C41" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="53" cy="95" r="5" fill="#FF8A80" opacity="0.5"/>
+          <circle cx="107" cy="95" r="5" fill="#FF8A80" opacity="0.5"/>
+        </svg>`
+      },
+      {
+        id: "bayit",
+        word: "בַּיִת",
+        syllables: ["בַּ", "יִת"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <linearGradient id="roofGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#FF7043"/>
+              <stop offset="100%" stop-color="#D84315"/>
+            </linearGradient>
+          </defs>
+          <rect x="104" y="38" width="16" height="30" rx="3" fill="#8D6E63"/>
+          <ellipse cx="112" cy="28" rx="8" ry="4" fill="#CFD8DC" opacity="0.8"/>
+          <ellipse cx="117" cy="18" rx="6" ry="3" fill="#ECEFF1" opacity="0.6"/>
+          <rect x="36" y="75" width="88" height="65" rx="8" fill="#FFF8E1" stroke="#FFE082" stroke-width="3"/>
+          <polygon points="80,24 20,78 140,78" fill="url(#roofGrad)"/>
+          <rect x="68" y="96" width="24" height="44" rx="4" fill="#8D6E63"/>
+          <circle cx="86" cy="118" r="3" fill="#FFD54F"/>
+          <rect x="44" y="90" width="18" height="18" rx="3" fill="#81D4FA" stroke="#0288D1" stroke-width="2"/>
+          <line x1="53" y1="90" x2="53" y2="108" stroke="#0288D1" stroke-width="2"/>
+          <line x1="44" y1="99" x2="62" y2="99" stroke="#0288D1" stroke-width="2"/>
+          <rect x="98" y="90" width="18" height="18" rx="3" fill="#81D4FA" stroke="#0288D1" stroke-width="2"/>
+          <line x1="107" y1="90" x2="107" y2="108" stroke="#0288D1" stroke-width="2"/>
+          <line x1="98" y1="99" x2="116" y2="99" stroke="#0288D1" stroke-width="2"/>
+          <path d="M22 140 Q80 135 138 140" stroke="#81C784" stroke-width="6" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: "etz",
+        word: "עֵץ",
+        syllables: ["עֵץ"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M72 90 L68 142 L92 142 L88 90 Z" fill="#795548"/>
+          <path d="M68 142 Q80 138 92 142" stroke="#5D4037" stroke-width="3"/>
+          <circle cx="80" cy="55" r="32" fill="#66BB6A"/>
+          <circle cx="56" cy="72" r="26" fill="#4CAF50"/>
+          <circle cx="104" cy="72" r="26" fill="#4CAF50"/>
+          <circle cx="80" cy="82" r="28" fill="#388E3C"/>
+          <circle cx="62" cy="65" r="5" fill="#E53935"/>
+          <circle cx="98" cy="65" r="5" fill="#E53935"/>
+          <circle cx="80" cy="50" r="5" fill="#E53935"/>
+          <circle cx="72" cy="80" r="5" fill="#E53935"/>
+          <circle cx="90" cy="82" r="5" fill="#E53935"/>
+          <ellipse cx="80" cy="144" rx="42" ry="8" fill="#A5D6A7"/>
+        </svg>`
+      },
+      {
+        id: "perach",
+        word: "פֶּרַח",
+        syllables: ["פֶּ", "רַח"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M80 80 Q76 115 80 144" stroke="#4CAF50" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M80 115 Q60 110 52 120 Q66 128 80 118" fill="#66BB6A"/>
+          <path d="M80 126 Q100 120 108 130 Q94 138 80 129" fill="#66BB6A"/>
+          <circle cx="80" cy="50" r="18" fill="#F06292"/>
+          <circle cx="104" cy="65" r="18" fill="#EC407A"/>
+          <circle cx="96" cy="94" r="18" fill="#F06292"/>
+          <circle cx="64" cy="94" r="18" fill="#F06292"/>
+          <circle cx="56" cy="65" r="18" fill="#EC407A"/>
+          <circle cx="80" cy="74" r="18" fill="#FDD835"/>
+          <circle cx="74" cy="71" r="2.5" fill="#5D4037"/>
+          <circle cx="86" cy="71" r="2.5" fill="#5D4037"/>
+          <path d="M75 77 Q80 82 85 77" stroke="#5D4037" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: "shemesh",
+        word: "שֶׁמֶשׁ",
+        syllables: ["שֶׁ", "מֶשׁ"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFF59D"/>
+              <stop offset="70%" stop-color="#FBC02D"/>
+              <stop offset="100%" stop-color="#F57F17"/>
+            </radialGradient>
+          </defs>
+          <g stroke="#FFA000" stroke-width="6" stroke-linecap="round">
+            <line x1="80" y1="18" x2="80" y2="28"/>
+            <line x1="80" y1="132" x2="80" y2="142"/>
+            <line x1="18" y1="80" x2="28" y2="80"/>
+            <line x1="132" y1="80" x2="142" y2="80"/>
+            <line x1="36" y1="36" x2="44" y2="44"/>
+            <line x1="116" y1="116" x2="124" y2="124"/>
+            <line x1="36" y1="124" x2="44" y2="116"/>
+            <line x1="116" y1="44" x2="124" y2="36"/>
+          </g>
+          <circle cx="80" cy="80" r="42" fill="url(#sunGrad)"/>
+          <circle cx="68" cy="74" r="4" fill="#4E342E"/>
+          <circle cx="66" cy="72" r="1.5" fill="#FFFFFF"/>
+          <circle cx="92" cy="74" r="4" fill="#4E342E"/>
+          <circle cx="90" cy="72" r="1.5" fill="#FFFFFF"/>
+          <path d="M71 85 Q80 94 89 85" stroke="#BF360C" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="60" cy="84" r="5" fill="#FF8A80" opacity="0.6"/>
+          <circle cx="100" cy="84" r="5" fill="#FF8A80" opacity="0.6"/>
+        </svg>`
+      },
+      {
+        id: "dag",
+        word: "דָּג",
+        syllables: ["דָּג"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <circle cx="36" cy="50" r="4" fill="#B3E5FC" opacity="0.7"/>
+          <circle cx="28" cy="38" r="6" fill="#B3E5FC" opacity="0.8"/>
+          <polygon points="126,80 148,54 142,80 148,106" fill="#FB8C00"/>
+          <ellipse cx="86" cy="80" rx="46" ry="32" fill="#FFA726"/>
+          <path d="M52 86 Q86 112 120 86 Q86 96 52 86 Z" fill="#FFE082"/>
+          <path d="M86 48 Q95 38 106 44 Q98 54 88 50 Z" fill="#FB8C00"/>
+          <path d="M78 88 Q72 104 88 98 Z" fill="#FB8C00"/>
+          <circle cx="58" cy="74" r="7" fill="#FFFFFF"/>
+          <circle cx="56" cy="74" r="4.5" fill="#37474F"/>
+          <circle cx="54" cy="72" r="1.8" fill="#FFFFFF"/>
+          <path d="M41 82 Q46 84 41 87" stroke="#E65100" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M72 70 Q77 80 72 90" stroke="#F57C00" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: "kadur",
+        word: "כַּדּוּר",
+        syllables: ["כַּ", "דּוּר"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <clipPath id="ballClip"><circle cx="80" cy="80" r="50"/></clipPath>
+          <circle cx="80" cy="80" r="50" fill="#ECEFF1"/>
+          <g clip-path="url(#ballClip)">
+            <path d="M80 80 L30 80 A50 50 0 0 1 55 37 Z" fill="#EF5350"/>
+            <path d="M80 80 L55 37 A50 50 0 0 1 105 37 Z" fill="#42A5F5"/>
+            <path d="M80 80 L105 37 A50 50 0 0 1 130 80 Z" fill="#FFEE58"/>
+            <path d="M80 80 L130 80 A50 50 0 0 1 105 123 Z" fill="#66BB6A"/>
+            <path d="M80 80 L105 123 A50 50 0 0 1 55 123 Z" fill="#AB47BC"/>
+            <path d="M80 80 L55 123 A50 50 0 0 1 30 80 Z" fill="#FFA726"/>
+            <circle cx="80" cy="80" r="14" fill="#FFFFFF"/>
+          </g>
+          <circle cx="80" cy="80" r="50" fill="none" stroke="#37474F" stroke-width="3"/>
+          <ellipse cx="64" cy="56" rx="14" ry="8" transform="rotate(-30 64 56)" fill="#FFFFFF" opacity="0.4"/>
+        </svg>`
+      },
+      {
+        id: "balon",
+        word: "בַּלּוֹן",
+        syllables: ["בַּ", "לּוֹן"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <radialGradient id="balloonGrad" cx="35%" cy="30%" r="65%">
+              <stop offset="0%" stop-color="#FF8A80"/>
+              <stop offset="50%" stop-color="#FF5252"/>
+              <stop offset="100%" stop-color="#C62828"/>
+            </radialGradient>
+          </defs>
+          <path d="M80 114 Q90 126 76 138 Q84 148 78 156" stroke="#90A4AE" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <polygon points="76,114 84,114 80,108" fill="#C62828"/>
+          <ellipse cx="80" cy="65" rx="42" ry="48" fill="url(#balloonGrad)"/>
+          <ellipse cx="64" cy="46" rx="10" ry="20" transform="rotate(-25 64 46)" fill="#FFFFFF" opacity="0.5"/>
+          <circle cx="58" cy="74" r="4" fill="#FFFFFF" opacity="0.4"/>
+        </svg>`
+      },
+      {
+        id: "tapuach",
+        word: "תַּפּוּחַ",
+        syllables: ["תַּ", "פּוּ", "חַ"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <radialGradient id="appleGrad" cx="40%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#EF5350"/>
+              <stop offset="60%" stop-color="#E53935"/>
+              <stop offset="100%" stop-color="#B71C1C"/>
+            </radialGradient>
+          </defs>
+          <path d="M80 50 Q86 28 98 24" stroke="#5D4037" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M84 42 Q108 36 112 48 Q98 54 84 42 Z" fill="#66BB6A"/>
+          <path d="M80 52 C64 44 38 52 38 82 C38 116 66 136 80 136 C94 136 122 116 122 82 C122 52 96 44 80 52 Z" fill="url(#appleGrad)"/>
+          <ellipse cx="58" cy="72" rx="8" ry="20" transform="rotate(-20 58 72)" fill="#FFFFFF" opacity="0.4"/>
+        </svg>`
+      },
+      {
+        id: "kochav",
+        word: "כּוֹכָב",
+        syllables: ["כּוֹ", "כָב"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFEE58"/>
+              <stop offset="100%" stop-color="#FFA000"/>
+            </linearGradient>
+          </defs>
+          <polygon points="80,20 98,58 140,64 110,94 117,136 80,116 43,136 50,94 20,64 62,58" fill="url(#starGrad)" stroke="#FF8F00" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="70" cy="78" r="4.5" fill="#3E2723"/>
+          <circle cx="68" cy="76" r="1.5" fill="#FFFFFF"/>
+          <circle cx="90" cy="78" r="4.5" fill="#3E2723"/>
+          <circle cx="88" cy="76" r="1.5" fill="#FFFFFF"/>
+          <path d="M74 88 Q80 94 86 88" stroke="#3E2723" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="62" cy="85" r="4" fill="#FF8A80" opacity="0.6"/>
+          <circle cx="98" cy="85" r="4" fill="#FF8A80" opacity="0.6"/>
+        </svg>`
+      },
+      {
+        id: "yareach",
+        word: "יָרֵחַ",
+        syllables: ["יָ", "רֵ", "חַ"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <radialGradient id="moonGrad" cx="60%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#FFF9C4"/>
+              <stop offset="80%" stop-color="#FDD835"/>
+              <stop offset="100%" stop-color="#FBC02D"/>
+            </radialGradient>
+          </defs>
+          <path d="M88 24 A56 56 0 1 0 134 116 A62 62 0 1 1 88 24 Z" fill="url(#moonGrad)"/>
+          <path d="M68 84 Q76 90 84 84" stroke="#5D4037" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M72 70 Q76 65 80 70" stroke="#5D4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="64" cy="84" r="5" fill="#FFAB91" opacity="0.5"/>
+          <polygon points="120,40 123,47 130,48 125,53 126,60 120,56 114,60 115,53 110,48 117,47" fill="#FFEE58"/>
+          <circle cx="44" cy="40" r="2.5" fill="#FFF59D"/>
+          <circle cx="128" cy="94" r="2.5" fill="#FFF59D"/>
+        </svg>`
+      },
+      {
+        id: "sefer",
+        word: "סֵפֶר",
+        syllables: ["סֵ", "פֶר"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M80 126 C62 118 36 122 22 128 L22 52 C36 46 62 42 80 50 C98 42 124 46 138 52 L138 128 C124 122 98 118 80 126 Z" fill="#5C6BC0"/>
+          <path d="M80 120 C62 112 38 116 26 122 L26 48 C38 42 62 38 80 46 C98 38 122 42 134 48 L134 122 C122 116 98 112 80 120 Z" fill="#FFFDE7"/>
+          <line x1="80" y1="46" x2="80" y2="120" stroke="#9FA8DA" stroke-width="3"/>
+          <path d="M80 46 L80 92 L86 86 L92 92 L92 48" fill="#E53935"/>
+          <line x1="38" y1="62" x2="68" y2="58" stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="38" y1="74" x2="68" y2="70" stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="38" y1="86" x2="68" y2="82" stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="92" y1="62" x2="122" y2="66" stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="92" y1="74" x2="122" y2="78" stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="92" y1="86" x2="122" y2="90" stroke="#B0BEC5" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: "glida",
+        word: "גְּלִידָה",
+        syllables: ["גְּ", "לִי", "דָה"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <polygon points="56,86 104,86 80,146" fill="#D7CCC8"/>
+          <path d="M60 96 L100 96 M66 108 L94 108 M72 120 L88 120 M80 86 L92 132 M80 86 L68 132" stroke="#8D6E63" stroke-width="2"/>
+          <circle cx="80" cy="74" r="28" fill="#80CBC4"/>
+          <circle cx="80" cy="50" r="24" fill="#F48FB1"/>
+          <circle cx="70" cy="76" r="3" fill="#4DB6AC"/>
+          <circle cx="90" cy="72" r="3" fill="#4DB6AC"/>
+          <circle cx="74" cy="48" r="2.5" fill="#EC407A"/>
+          <circle cx="80" cy="28" r="9" fill="#D32F2F"/>
+          <path d="M80 22 Q88 12 96 14" stroke="#5D4037" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="77" cy="26" r="2" fill="#FFFFFF"/>
+        </svg>`
+      },
+      {
+        id: "oto",
+        word: "אוֹטוֹ",
+        syllables: ["אוֹ", "טוֹ"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M30 105 L36 85 Q42 78 54 78 L68 78 L78 54 Q82 48 94 48 L114 48 Q124 48 130 58 L142 80 L146 95 Q148 108 140 108 L134 108 A16 16 0 0 1 102 108 L66 108 A16 16 0 0 1 34 108 Z" fill="#42A5F5"/>
+          <path d="M80 54 L94 54 L94 74 L70 74 Z" fill="#E1F5FE"/>
+          <path d="M98 54 L114 54 Q120 54 124 62 L132 74 L98 74 Z" fill="#E1F5FE"/>
+          <circle cx="34" cy="90" r="5" fill="#FFEE58"/>
+          <circle cx="144" cy="90" r="4" fill="#EF5350"/>
+          <circle cx="50" cy="110" r="14" fill="#37474F"/>
+          <circle cx="50" cy="110" r="6" fill="#CFD8DC"/>
+          <circle cx="118" cy="110" r="14" fill="#37474F"/>
+          <circle cx="118" cy="110" r="6" fill="#CFD8DC"/>
+          <line x1="20" y1="126" x2="148" y2="126" stroke="#B0BEC5" stroke-width="4" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: "lev",
+        word: "לֵב",
+        syllables: ["לֵב"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <defs>
+            <radialGradient id="heartGrad" cx="40%" cy="30%" r="65%">
+              <stop offset="0%" stop-color="#FF6584"/>
+              <stop offset="60%" stop-color="#E91E63"/>
+              <stop offset="100%" stop-color="#AD1457"/>
+            </radialGradient>
+          </defs>
+          <path d="M80 134 C30 98 22 58 48 38 C68 22 80 44 80 44 C80 44 92 22 112 38 C138 58 130 98 80 134 Z" fill="url(#heartGrad)"/>
+          <path d="M48 42 C40 54 42 70 48 80" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.45" fill="none"/>
+        </svg>`
+      },
+      {
+        id: "parpar",
+        word: "פַּרְפַּר",
+        syllables: ["פַּרְ", "פַּר"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M78 52 Q70 34 62 38" stroke="#5E35B1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="61" cy="38" r="3" fill="#5E35B1"/>
+          <path d="M82 52 Q90 34 98 38" stroke="#5E35B1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="99" cy="38" r="3" fill="#5E35B1"/>
+          <ellipse cx="50" cy="65" rx="30" ry="24" transform="rotate(-15 50 65)" fill="#4DD0E1"/>
+          <ellipse cx="56" cy="98" rx="22" ry="18" transform="rotate(15 56 98)" fill="#80DEEA"/>
+          <circle cx="50" cy="65" r="9" fill="#FFD54F"/>
+          <circle cx="56" cy="98" r="6" fill="#FF8A80"/>
+          <ellipse cx="110" cy="65" rx="30" ry="24" transform="rotate(15 110 65)" fill="#4DD0E1"/>
+          <ellipse cx="104" cy="98" rx="22" ry="18" transform="rotate(-15 104 98)" fill="#80DEEA"/>
+          <circle cx="110" cy="65" r="9" fill="#FFD54F"/>
+          <circle cx="104" cy="98" r="6" fill="#FF8A80"/>
+          <ellipse cx="80" cy="80" rx="6" ry="28" fill="#5E35B1"/>
+          <circle cx="80" cy="54" r="8" fill="#5E35B1"/>
+        </svg>`
+      },
+      {
+        id: "mayim",
+        word: "מַיִם",
+        syllables: ["מַ", "יִם"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <polygon points="48,46 112,46 102,132 58,132" fill="#E1F5FE" stroke="#81D4FA" stroke-width="3"/>
+          <polygon points="51,68 109,68 100,128 60,128" fill="#4FC3F7" opacity="0.8"/>
+          <rect x="66" y="74" width="16" height="16" rx="3" transform="rotate(12 74 82)" fill="#B3E5FC" stroke="#E1F5FE" stroke-width="2"/>
+          <rect x="80" y="90" width="14" height="14" rx="3" transform="rotate(-10 87 97)" fill="#B3E5FC" stroke="#E1F5FE" stroke-width="2"/>
+          <line x1="74" y1="120" x2="118" y2="28" stroke="#FF7043" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="70" cy="112" r="3" fill="#FFFFFF" opacity="0.6"/>
+          <circle cx="92" cy="78" r="2.5" fill="#FFFFFF" opacity="0.6"/>
+        </svg>`
+      },
+      {
+        id: "uga",
+        word: "עוּגָה",
+        syllables: ["עוּ", "גָה"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <ellipse cx="80" cy="132" rx="58" ry="12" fill="#CFD8DC"/>
+          <rect x="36" y="88" width="88" height="38" rx="6" fill="#FFF3E0"/>
+          <rect x="36" y="104" width="88" height="8" fill="#D7CCC8"/>
+          <path d="M36 94 Q44 104 50 94 Q58 106 66 94 Q74 104 82 94 Q90 106 98 94 Q106 104 114 94 Q120 100 124 94 L124 88 L36 88 Z" fill="#F48FB1"/>
+          <rect x="48" y="58" width="64" height="30" rx="4" fill="#FFE0B2"/>
+          <path d="M48 64 Q56 72 64 64 Q72 74 80 64 Q88 74 96 64 Q104 72 112 64 L112 58 L48 58 Z" fill="#F48FB1"/>
+          <rect x="77" y="38" width="6" height="20" rx="2" fill="#81D4FA"/>
+          <ellipse cx="80" cy="30" rx="4.5" ry="7" fill="#FFCA28"/>
+          <ellipse cx="80" cy="31" rx="2" ry="4" fill="#E65100"/>
+        </svg>`
+      },
+      {
+        id: "shaon",
+        word: "שָׁעוֹן",
+        syllables: ["שָׁ", "עוֹן"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <circle cx="80" cy="80" r="50" fill="#E0F2F1" stroke="#26A69A" stroke-width="7"/>
+          <circle cx="80" cy="80" r="42" fill="#FFFFFF"/>
+          <circle cx="80" cy="45" r="3" fill="#004D40"/>
+          <circle cx="115" cy="80" r="3" fill="#004D40"/>
+          <circle cx="80" cy="115" r="3" fill="#004D40"/>
+          <circle cx="45" cy="80" r="3" fill="#004D40"/>
+          <line x1="80" y1="80" x2="60" y2="58" stroke="#00796B" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="80" y1="80" x2="104" y2="62" stroke="#004D40" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="80" cy="80" r="5" fill="#E91E63"/>
+        </svg>`
+      },
+      {
+        id: "gezer",
+        word: "גֶּזֶר",
+        syllables: ["גֶּ", "זֶר"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M80 65 Q66 30 50 34 Q66 48 76 65" fill="#4CAF50"/>
+          <path d="M80 65 Q80 22 84 22 Q86 44 82 65" fill="#66BB6A"/>
+          <path d="M80 65 Q94 30 110 34 Q94 48 84 65" fill="#4CAF50"/>
+          <path d="M64 68 Q80 62 96 68 Q90 120 80 144 Q70 120 64 68 Z" fill="#FF7043"/>
+          <path d="M70 82 Q78 84 84 82" stroke="#E64A19" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M74 98 Q82 100 90 98" stroke="#E64A19" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M74 114 Q78 116 84 114" stroke="#E64A19" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: "kova",
+        word: "כּוֹבַע",
+        syllables: ["כּוֹ", "בַע"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M42 96 C42 56 62 46 88 46 C112 46 126 62 126 96 Z" fill="#7E57C2"/>
+          <circle cx="88" cy="46" r="4.5" fill="#FFD54F"/>
+          <path d="M30 96 C30 96 46 88 92 88 C132 88 144 104 136 108 C116 116 54 114 30 96 Z" fill="#5E35B1"/>
+          <polygon points="86,60 89,68 97,68 91,73 93,81 86,76 79,81 81,73 75,68 83,68" fill="#FFD54F"/>
+        </svg>`
+      },
+      {
+        id: "barvaz",
+        word: "בַּרְוָז",
+        syllables: ["בַּרְ", "וָז"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M26 128 Q44 122 62 128 Q80 134 98 128 Q116 122 134 128" stroke="#81D4FA" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+          <path d="M48 94 C48 78 68 76 80 84 C92 72 122 72 126 94 C128 108 118 122 84 122 C52 122 48 108 48 94 Z" fill="#FFEE58"/>
+          <circle cx="62" cy="70" r="18" fill="#FFEE58"/>
+          <polygon points="46,70 30,75 46,80" fill="#FF9800"/>
+          <circle cx="56" cy="67" r="3" fill="#37474F"/>
+          <circle cx="55" cy="66" r="1" fill="#FFFFFF"/>
+          <path d="M82 92 Q100 88 106 98 Q96 106 82 96" fill="#FDD835"/>
+        </svg>`
+      },
+      {
+        id: "sir",
+        word: "סִיר",
+        syllables: ["סִיר"],
+        svg: `<svg viewBox="0 0 160 160" class="card-svg">
+          <path d="M68 44 Q62 34 68 26 Q74 18 68 10" stroke="#B0BEC5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M80 40 Q74 30 80 22 Q86 14 80 6" stroke="#B0BEC5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M92 44 Q86 34 92 26 Q98 18 92 10" stroke="#B0BEC5" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <rect x="24" y="80" width="14" height="12" rx="4" fill="#004D40"/>
+          <rect x="122" y="80" width="14" height="12" rx="4" fill="#004D40"/>
+          <rect x="34" y="68" width="92" height="60" rx="8" fill="#26A69A"/>
+          <rect x="34" y="68" width="92" height="10" fill="#00897B"/>
+          <ellipse cx="80" cy="65" rx="48" ry="8" fill="#80CBC4"/>
+          <circle cx="80" cy="54" r="6" fill="#004D40"/>
+        </svg>`
+      }
+    ];
+
+    /* ==============================================================
+       2. POSITIVE PRAISES & ENCOURAGEMENT TEXTS
+       ============================================================== */
+    const SUCCESS_PRAISES = [
+      "כָּל הַכָּבוֹד! קְרָאתֶם מְצֻיָּן! 🌟",
+      "אַלּוּפִים! תְּשׁוּבָה מְדֻיֶּקֶת! 🎯",
+      "נִפְלָא מְאוֹד! אֵיזֶה יֹפִי שֶׁל קְרִיאָה! ✨",
+      "יוֹפִי! זֶה בְּדִיּוּק הַצִּיּוּר הַנָּכוֹן! 👏",
+      "קְרִיאָה מֻשְׁלֶמֶת! מַמְשִׁיכִים בְּהַצְלָחָה! 🚀"
+    ];
+
+    const RETRY_ENCOURAGEMENTS = [
+      "כִּמְעַט! הִסְתַּכְּלוּ שׁוּב עַל הַנִּקּוּד וּבַחֲרוּ תְּמוּנָה אַחֶרֶת 😊",
+      "לֹא נוֹרָא! בּוֹאוּ נִקְרָא לְאַט מֵחָדָשׁ וּנְנַסֶּה שׁוּב 💪",
+      "נַסּוּ שׁוּב! אֶפְשָׁר לְהַקְשִׁיב לַמִּלָּה עִם כַּפְתּוֹר הַהַשְׁמָעָה 👂",
+      "אַתֶּם קְרוֹבִים מְאוֹד! בַּחֲרוּ אֶת הַצִּיּוּר שֶׁמַּתְאִים לַמִּלָּה 🌱"
+    ];
+
+    /* ==============================================================
+       3. WEB AUDIO SYNTHESIZER (100% SELF-CONTAINED & RELIABLE)
+       ============================================================== */
+    let audioCtx = null;
+    let isSoundMuted = false;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playTone(freq, type, duration, startTime = 0, gainLevel = 0.15) {
+      if (isSoundMuted) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime + startTime);
+
+        gain.gain.setValueAtTime(gainLevel, ctx.currentTime + startTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + startTime + duration);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(ctx.currentTime + startTime);
+        osc.stop(ctx.currentTime + startTime + duration);
+      } catch (e) {
+        console.warn('Audio playback error:', e);
+      }
+    }
+
+    function playSuccessChime() {
+      // Cheerful C-Major arpeggio (C5, E5, G5, C6)
+      playTone(523.25, 'sine', 0.25, 0.0, 0.2);
+      playTone(659.25, 'sine', 0.25, 0.1, 0.22);
+      playTone(783.99, 'sine', 0.3, 0.2, 0.24);
+      playTone(1046.50, 'triangle', 0.45, 0.3, 0.28);
+    }
+
+    function playEncourageSound() {
+      // Soft, gentle warm wooden sound (no harsh buzzer!)
+      playTone(392.00, 'triangle', 0.22, 0.0, 0.15);
+      playTone(440.00, 'sine', 0.28, 0.12, 0.14);
+    }
+
+    function playStarSound() {
+      // Tiny cute pop/sparkle
+      playTone(1200, 'sine', 0.1, 0.0, 0.12);
+      playTone(1600, 'sine', 0.15, 0.05, 0.14);
+    }
+
+    function playTrophyFanfare() {
+      // Celebratory ascending melody
+      const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+      notes.forEach((f, idx) => {
+        playTone(f, 'triangle', 0.35, idx * 0.12, 0.22);
+      });
+      playTone(1046.50, 'sine', 0.8, 0.65, 0.3);
+    }
+
+    /* Web Speech API Read-Aloud */
+    function speakHebrew(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'he-IL';
+        utterance.rate = 0.82; // slightly slower, clear for 1st grade
+        utterance.pitch = 1.05;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    /* ==============================================================
+       4. GAME STATE & LOGIC
+       ============================================================== */
+    const ROUND_COUNT = 10;
+    let roundQuestions = [];
+    let currentIdx = 0;
+    let score = 0;
+    let streak = 0;
+    let bestStreak = 0;
+    let isQuestionResolved = false;
+    let syllablesVisible = false;
+
+    // DOM Elements
+    const wordDisplay = document.getElementById('word-display');
+    const syllablesDisplay = document.getElementById('syllables-display');
+    const choicesGrid = document.getElementById('choices-grid');
+    const feedbackBanner = document.getElementById('feedback-banner');
+    const scoreVal = document.getElementById('score-val');
+    const scorePill = document.getElementById('score-pill');
+    const streakVal = document.getElementById('streak-val');
+    const streakPill = document.getElementById('streak-pill');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const soundToggleBtn = document.getElementById('sound-toggle-btn');
+    const listenWordBtn = document.getElementById('listen-word-btn');
+    const syllablesToggleBtn = document.getElementById('syllables-toggle-btn');
+    const readAloudBtn = document.getElementById('read-aloud-btn');
+    const finishModal = document.getElementById('finish-modal');
+    const modalFinalScore = document.getElementById('modal-final-score');
+    const modalFinalStreak = document.getElementById('modal-final-streak');
+    const modalRestartBtn = document.getElementById('modal-restart-btn');
+
+    // Shuffle helper
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // Initialize a new round
+    function startNewRound() {
+      // Pick 10 random words from the 24 words in the database
+      const shuffledAll = shuffleArray(WORD_DATABASE);
+      roundQuestions = shuffledAll.slice(0, ROUND_COUNT);
+      currentIdx = 0;
+      score = 0;
+      streak = 0;
+      bestStreak = 0;
+      updateStatsUI();
+      finishModal.classList.remove('open');
+      loadQuestion(currentIdx);
+    }
+
+    // Load question at index
+    function loadQuestion(index) {
+      if (index >= roundQuestions.length) {
+        showRoundSummary();
+        return;
+      }
+
+      isQuestionResolved = false;
+      const targetItem = roundQuestions[index];
+
+      // Update progress
+      const progressPercent = (index / ROUND_COUNT) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      progressText.textContent = `${index + 1} / ${ROUND_COUNT}`;
+
+      // Update Word display
+      wordDisplay.textContent = targetItem.word;
+
+      // Update Syllables breakdown
+      syllablesDisplay.innerHTML = '';
+      targetItem.syllables.forEach((syl, i) => {
+        const sylElem = document.createElement('div');
+        sylElem.className = 'syllable-item';
+        sylElem.innerHTML = `<span>${syl}</span><span class="syllable-dot"></span>`;
+        syllablesDisplay.appendChild(sylElem);
+
+        if (i < targetItem.syllables.length - 1) {
+          const sep = document.createElement('span');
+          sep.className = 'syllables-separator';
+          sep.textContent = '•';
+          syllablesDisplay.appendChild(sep);
+        }
+      });
+      syllablesDisplay.style.display = syllablesVisible ? 'flex' : 'none';
+
+      // Pick 2 distractors (different from target)
+      const otherWords = WORD_DATABASE.filter(item => item.id !== targetItem.id);
+      const shuffledOthers = shuffleArray(otherWords);
+      const distractors = shuffledOthers.slice(0, 2);
+
+      // 3 options total
+      const choices = shuffleArray([targetItem, distractors[0], distractors[1]]);
+
+      // Render choice cards
+      choicesGrid.innerHTML = '';
+      choices.forEach(choice => {
+        const card = document.createElement('div');
+        card.className = 'choice-card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('aria-label', `ציור`);
+        card.dataset.id = choice.id;
+
+        card.innerHTML = `
+          <div class="card-svg-container">
+            ${choice.svg}
+          </div>
+        `;
+
+        card.addEventListener('click', () => handleCardClick(card, choice, targetItem));
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleCardClick(card, choice, targetItem);
+          }
+        });
+
+        choicesGrid.appendChild(card);
+      });
+
+      // Clear feedback banner
+      feedbackBanner.innerHTML = '';
+    }
+
+    // Handle user clicking an illustration card
+    function handleCardClick(cardElement, selectedItem, targetItem) {
+      if (isQuestionResolved) return;
+      if (cardElement.classList.contains('wrong')) return;
+
+      if (selectedItem.id === targetItem.id) {
+        // === SUCCESS! ===
+        isQuestionResolved = true;
+        cardElement.classList.add('correct');
+
+        // Add success checkmark badge
+        const badge = document.createElement('div');
+        badge.className = 'choice-badge-success';
+        badge.textContent = '✓';
+        cardElement.appendChild(badge);
+
+        // Sound & Points
+        playSuccessChime();
+        score += 10;
+        streak += 1;
+        if (streak > bestStreak) bestStreak = streak;
+        updateStatsUI(true);
+
+        // Score star animation flying from card to score header
+        animateFlyingStars(cardElement);
+
+        // Confetti burst
+        fireConfetti();
+
+        // Positive Reinforcement Message
+        const randomPraise = SUCCESS_PRAISES[Math.floor(Math.random() * SUCCESS_PRAISES.length)];
+        feedbackBanner.innerHTML = `
+          <div class="feedback-content success">
+            <span>${randomPraise}</span>
+            <button class="btn-next" id="btn-next-step">
+              <span>הַמִּלָּה הַבָּאָה</span>
+              <span>⬅️</span>
+            </button>
+          </div>
+        `;
+
+        document.getElementById('btn-next-step').addEventListener('click', () => {
+          advanceNextWord();
+        });
+
+        // Auto advance after 2.2 seconds if user doesn't click
+        setTimeout(() => {
+          if (isQuestionResolved && currentIdx === roundQuestions.indexOf(targetItem)) {
+            advanceNextWord();
+          }
+        }, 2200);
+
+      } else {
+        // === GENTLE RETRY ENCOURAGEMENT (ERROR) ===
+        cardElement.classList.add('wrong');
+        playEncourageSound();
+        streak = 0; // reset streak gently without deducting points
+        updateStatsUI(false);
+
+        // Retry badge on the card
+        const badge = document.createElement('div');
+        badge.className = 'choice-badge-retry';
+        badge.textContent = 'נַסּוּ שׁוּב 😊';
+        cardElement.appendChild(badge);
+
+        // Encouragement Message at bottom
+        const randomEncourage = RETRY_ENCOURAGEMENTS[Math.floor(Math.random() * RETRY_ENCOURAGEMENTS.length)];
+        feedbackBanner.innerHTML = `
+          <div class="feedback-content encourage">
+            <span>${randomEncourage}</span>
+          </div>
+        `;
+      }
+    }
+
+    function advanceNextWord() {
+      currentIdx++;
+      loadQuestion(currentIdx);
+    }
+
+    function updateStatsUI(didScore = false) {
+      scoreVal.textContent = score;
+      streakVal.textContent = streak;
+
+      if (didScore) {
+        scorePill.classList.add('bounce');
+        streakPill.classList.add('bounce');
+        setTimeout(() => {
+          scorePill.classList.remove('bounce');
+          streakPill.classList.remove('bounce');
+        }, 400);
+      }
+    }
+
+    /* ==============================================================
+       5. SCORE ACCUMULATION ANIMATION (FLYING STARS)
+       ============================================================== */
+    function animateFlyingStars(sourceElement) {
+      const srcRect = sourceElement.getBoundingClientRect();
+      const targetRect = scorePill.getBoundingClientRect();
+
+      const startX = srcRect.left + srcRect.width / 2;
+      const startY = srcRect.top + srcRect.height / 2;
+      const endX = targetRect.left + targetRect.width / 2;
+      const endY = targetRect.top + targetRect.height / 2;
+
+      // Floating +10 tag right on the score pill
+      const floatTag = document.createElement('div');
+      floatTag.className = 'score-float-tag';
+      floatTag.textContent = '+10';
+      scorePill.appendChild(floatTag);
+      setTimeout(() => floatTag.remove(), 1000);
+
+      // Create 5 golden stars flying in arc paths
+      const starIcons = ['⭐', '✨', '🌟', '⭐', '✨'];
+      starIcons.forEach((starChar, i) => {
+        const star = document.createElement('div');
+        star.className = 'flying-star';
+        star.textContent = starChar;
+        document.body.appendChild(star);
+
+        const spreadX = (Math.random() - 0.5) * 60;
+        const spreadY = (Math.random() - 0.5) * 60;
+
+        star.style.left = `${startX + spreadX}px`;
+        star.style.top = `${startY + spreadY}px`;
+        star.style.transform = 'scale(0.3) rotate(0deg)';
+        star.style.opacity = '1';
+
+        setTimeout(() => {
+          star.style.transform = `translate(${endX - startX}px, ${endY - startY}px) scale(1.1) rotate(${360 + i * 45}deg)`;
+          star.style.opacity = '0.9';
+        }, 50 + i * 60);
+
+        setTimeout(() => {
+          playStarSound();
+          star.remove();
+        }, 750 + i * 60);
+      });
+    }
+
+    /* ==============================================================
+       6. CONFETTI ANIMATION SYSTEM
+       ============================================================== */
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let confettiParticles = [];
+    let confettiAnimId = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function fireConfetti() {
+      const colors = ['#6EE7B7', '#34D399', '#FCD34D', '#F472B6', '#60A5FA', '#FBBF24'];
+      const count = 45;
+      for (let i = 0; i < count; i++) {
+        confettiParticles.push({
+          x: canvas.width / 2 + (Math.random() - 0.5) * 300,
+          y: canvas.height * 0.35,
+          vx: (Math.random() - 0.5) * 8,
+          vy: Math.random() * -7 - 3,
+          size: Math.random() * 8 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 10,
+          opacity: 1,
+          gravity: 0.28
+        });
+      }
+      if (!confettiAnimId) {
+        animateConfetti();
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = confettiParticles.length - 1; i >= 0; i--) {
+        const p = confettiParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.rotation += p.rotSpeed;
+        p.opacity -= 0.012;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(p.opacity, 0);
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+
+        if (p.opacity <= 0 || p.y > canvas.height) {
+          confettiParticles.splice(i, 1);
+        }
+      }
+
+      if (confettiParticles.length > 0) {
+        confettiAnimId = requestAnimationFrame(animateConfetti);
+      } else {
+        confettiAnimId = null;
+      }
+    }
+
+    /* ==============================================================
+       7. ROUND COMPLETION & MODAL
+       ============================================================== */
+    function showRoundSummary() {
+      playTrophyFanfare();
+      fireConfetti();
+      setTimeout(fireConfetti, 400);
+
+      modalFinalScore.textContent = score;
+      modalFinalStreak.textContent = bestStreak;
+      finishModal.classList.add('open');
+    }
+
+    /* ==============================================================
+       8. EVENT LISTENERS & INITIALIZATION
+       ============================================================== */
+    // Audio button toggle
+    soundToggleBtn.addEventListener('click', () => {
+      isSoundMuted = !isSoundMuted;
+      soundToggleBtn.textContent = isSoundMuted ? '🔇' : '🔊';
+      soundToggleBtn.title = isSoundMuted ? 'צלילים מושתקים - לחצו להפעיל' : 'צלילים פועלים - לחצו להשתיק';
+    });
+
+    // Listen word read-aloud
+    listenWordBtn.addEventListener('click', () => {
+      const currentWord = roundQuestions[currentIdx];
+      if (currentWord) {
+        playTone(600, 'sine', 0.12, 0, 0.15);
+        speakHebrew(currentWord.word);
+      }
+    });
+
+    // Syllables breakdown button
+    syllablesToggleBtn.addEventListener('click', () => {
+      syllablesVisible = !syllablesVisible;
+      syllablesDisplay.style.display = syllablesVisible ? 'flex' : 'none';
+      syllablesToggleBtn.classList.toggle('active', syllablesVisible);
+    });
+
+    // "קראתי בקול רם!" celebratory interaction
+    readAloudBtn.addEventListener('click', () => {
+      playTone(880, 'sine', 0.2, 0, 0.2);
+      fireConfetti();
+      feedbackBanner.innerHTML = `
+        <div class="feedback-content success">
+          <span>יוֹפִי שֶׁל קְרִיאָה בְּקוֹל! כָּל הַכָּבוֹד! עַכְשָׁו בַּחֲרוּ אֶת הַצִּיּוּר 🌟</span>
+        </div>
+      `;
+    });
+
+    // Restart button in celebration modal
+    modalRestartBtn.addEventListener('click', () => {
+      startNewRound();
+    });
+
+    // Start initial game
+    window.addEventListener('DOMContentLoaded', () => {
+      startNewRound();
+    });
+  </script>
+</body>
+</html>
